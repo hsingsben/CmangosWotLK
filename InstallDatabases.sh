@@ -15,18 +15,18 @@ SCRIPT_FILE="InstallFullDB.sh"
 CONFIG_FILE="InstallFullDB.config"
 
 # testing only
-ADDITIONAL_PATH=""
+ADDITIONAL_PATH="/database"
 
 #variables assigned and read from $CONFIG_FILE
 DB_HOST="localhost"
 DB_PORT="3306"
-DATABASE=""
+DATABASE="wotlkmangos"
 USERNAME="root"
-PASSWORD=$MYSQL_ROOT_PASSWORD
-MYSQL=""
-CORE_PATH=""
+PASSWORD=mangos
+MYSQL="mysql"
+CORE_PATH="/mangos"
 DEV_UPDATES="NO"
-FORCE_WAIT="YES"
+FORCE_WAIT="NO"
 
 function create_config {
 # Re(create) config file
@@ -68,7 +68,7 @@ CORE_PATH=""
 MYSQL="mysql"
 
 ## Define if you want to wait a bit before applying the full database
-FORCE_WAIT="YES"
+FORCE_WAIT="NO"
 
 ## Define if the 'dev' directory for processing development SQL files needs to be used
 ## Set the variable to "YES" to use the dev directory
