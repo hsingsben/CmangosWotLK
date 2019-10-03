@@ -24,7 +24,7 @@ DATABASE="wotlkmangos"
 USERNAME="root"
 PASSWORD=mangos
 MYSQL="mysql"
-CORE_PATH="/mangos"
+CORE_PATH="/sources"
 DEV_UPDATES="NO"
 FORCE_WAIT="NO"
 
@@ -62,7 +62,7 @@ PASSWORD="mangos"
 
 ## Define the path to your core's folder
 ## Core updates located under sql/updates from this mangos-directory will be added automatically
-CORE_PATH=""
+CORE_PATH="/sources"
 
 ## Define your mysql programm if this differs
 MYSQL="mysql"
