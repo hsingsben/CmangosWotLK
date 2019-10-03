@@ -17,10 +17,12 @@ P_BOTS="1"
   make
 
 mkdir /mangos
-cp /sources/linux/src/tools/Extractor_projects/Movemap-Generator/movemap-generator /mangos
-cp /sources/linux/src/tools/Extractor_projects/map-extractor/map-extractor /mangos
-cp /sources/linux/src/tools/Extractor_projects/vmap-extractor/vmap-extractor /mangos
-cp /sources/linux/src/mangosd/mangosd /mangos
-cp /sources/linux/src/realmd/realmd /mangos
+  cp -a /sources/build/contrib/extractor/ad /mangos
+  cp -a /sources/build/contrib/mmap/MoveMapGen /mangos
+  cp -a /sources/build/contrib/vmap_assembler/vmap_assembler /mangos
+  cp -a /sources/build/contrib/vmap_extractor/vmapextract/vmap_extractor /mangos
+  cp -a /sources/build/contrib/extractor_scripts /mangos
+  cp -a /sources/build/src/mangosd/mangosd /mangos
+  cp -a /sources/build/src/realmd/realmd /mangos
 
 rm -rf /sources 
