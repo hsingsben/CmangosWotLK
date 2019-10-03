@@ -368,9 +368,9 @@ echo
 
 if [ "${DUMP}" = "YES" ]; then
 	printf "Dumping database information...\n"
-	echo "${DB_HOST};${DB_PORT};${USERNAME};${PASSWORD};${rdb}" > ~/db.conf
-	echo "${DB_HOST};${DB_PORT};${USERNAME};${PASSWORD};${wdb}" >> ~/db.conf
-	echo "${DB_HOST};${DB_PORT};${USERNAME};${PASSWORD};${cdb}" >> ~/db.conf
+	echo "${DB_HOST};${DB_PORT};${USERNAME};${PASSWORD};${wotlkrealmd}" > ~/db.conf
+	echo "${DB_HOST};${DB_PORT};${USERNAME};${PASSWORD};${wotlkmangos}" >> ~/db.conf
+	echo "${DB_HOST};${DB_PORT};${USERNAME};${PASSWORD};${wotlkcharacters}" >> ~/db.conf
 fi
 
 
@@ -378,8 +378,8 @@ printf "Database creation and load complete :-)\n"
 printf "\n"
 printf "Updating Docker Host IP and/or WAN IP into realm database\n"
 printf "\n"
-echo mysql -u root -pmangos -e \'update realmd.realmlist SET localAddress='"'$DOCKER_HOST_IP'" 'WHERE id='1'';'\' > /install/updateip.sh
-echo mysql -u root -pmangos -e \'update realmd.realmlist SET address='"'$WAN_IP_ADDRESS'" 'WHERE id='1'';'\' >> /install/updateip.sh
+echo mysql -u root -pmangos -e \'update wotlkrealmd.realmlist SET localAddress='"'$DOCKER_HOST_IP'" 'WHERE id='1'';'\' > /install/updateip.sh
+echo mysql -u root -pmangos -e \'update wotlkrealmd.realmlist SET address='"'$WAN_IP_ADDRESS'" 'WHERE id='1'';'\' >> /install/updateip.sh
 chmod +x /install/updateip.sh
 /install/updateip.sh
 printf "Updated Docker Host IP into realm database\n"
