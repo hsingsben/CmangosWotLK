@@ -40,8 +40,12 @@ if [ ! -f /config/wowconfig/realmd.conf ]; then
    cp /install/realmd.conf /config/wowconfig
 fi
 
-if [ ! -f /config/wowconfig/console.conf ]; then
-   cp /install/console.conf /config/wowconfig
+if [ ! -f /config/wowconfig/ahbot.conf ]; then
+   cp /install/ahbot.conf /config/wowconfig
+fi
+
+if [ ! -f /config/wowconfig/playerbot.conf ]; then
+   cp /install/playerbot.conf /config/wowconfig
 fi
 
 echo Script Finished
