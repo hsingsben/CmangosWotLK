@@ -29,9 +29,9 @@ svr="localhost"
 user="root"
 pass=$MYSQL_ROOT_PASSWORD
 port="3306"
-wdb="mangos"
-cdb="character2"
-rdb="realmd"
+wdb="woltkmangos"
+cdb="woltkcharacters"
+rdb="woltkrealmd"
 
 printHelp()
 {
