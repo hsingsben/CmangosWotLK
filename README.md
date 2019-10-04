@@ -1,4 +1,4 @@
-# CmangosWotLK
+# CmangosWotLK - PlayerBots=ON
 
 Unofficial Mangos WotLK docker container
 
