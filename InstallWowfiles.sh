@@ -2,15 +2,18 @@
 
 cores=$(nproc --ignore=1)
 
-cp /mangos/mmap-extractor /wow
-cp /mangos/map-extractor /wow
-cp /mangos/vmap-extractor /wow
+cp /mangos/ad /wow
+cp /mangos/MoveMapGen /wow
+cp /mangos/vmap_assembler /wow
+cp /mangos/vmap_extractor /wow
+cp /mangos/ExtractResources.sh /wow
+cp /mangos/MoveMapGen.sh /wow
+cp /mangos/offmesh.txt /wow
 
 cd /wow
 
-./map-extractor
-./vmap-extractor
-./mmap-extractor --threads $cores
+./ExtractResources.sh
+./MoveMapGen.sh $cores
 
 echo Moving generated files from /wow to /config/wowfiles
 echo This may take a while.
