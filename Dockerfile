@@ -7,7 +7,8 @@ RUN \
 RUN \
   rm -rf /var/www/html && \
   git clone https://github.com/brouzuf/wotlk-db.git /database --recursive -b master && \
-  git clone https://github.com/brouzuf/CmangosWotLK.git /install --recursive -b master
+  git clone https://github.com/brouzuf/CmangosWotLK.git /install --recursive -b master && \
+  git clone https://metagit.org/blizzlike/cmangos-wotlk-db-localized.git /database/localized --recursive -b master
   
 COPY --from=brouzuf/cmangostwobuild /mangos /mangos
 
