@@ -68,7 +68,7 @@ You need to have a GM level 3 account to access the remote admin port.
 Create one the following way.
 
 ```
-docker exec -it wotlk /mangos/mangosd -c /config/wowconfig/console.conf
+docker exec -it wotlk /mangos/mangosd -c /config/wowconfig/mangosd.conf
 ```
 
 This will run a Cmangos config on another port with console enabled.
