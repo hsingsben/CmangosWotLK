@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cores=$(nproc --ignore=1)
+cores=$(nproc)
 
 cp /mangos/ad /wow
 cp /mangos/MoveMapGen /wow
