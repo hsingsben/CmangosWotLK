@@ -11,80 +11,30 @@ DB_TITLE="v1.2 'Ymiron'"
 NEXT_MILESTONES="0.19 0.20"
 
 #internal use
-SCRIPT_FILE="InstallFullDB.sh"
+SCRIPT_FILE="InstallDatabases.sh"
 CONFIG_FILE="InstallFullDB.config"
 
 # testing only
-ADDITIONAL_PATH="/database"
+ADDITIONAL_PATH="/database/"
 
-#variables assigned and read from $CONFIG_FILE
+
 DB_HOST="localhost"
+
 DB_PORT="3306"
 DATABASE="wotlkmangos"
+DATAREALM="woltkrealmd"
+DATACHARAC="wotlkcharacters"
 USERNAME="root"
 PASSWORD=mangos
 MYSQL="mysql"
-CORE_PATH="/sources"
+CORE_PATH="/database/"
 DEV_UPDATES="NO"
 FORCE_WAIT="NO"
 
-function create_config {
-# Re(create) config file
-cat >  $CONFIG_FILE << EOF
-####################################################################################################
-# This is the config file for the '$SCRIPT_FILE' script
-#
-# You need to insert
-#   DB_HOST:      Host on which the database resides
-#   DB_PORT:      Port on which the database is running
-#   DATABASE:     Your database
-#   USERNAME:     Your username
-#   PASSWORD:     Your password
-#   CORE_PATH:    Your path to core's directory
-#   MYSQL:        Your mysql command (usually mysql)
-#
-####################################################################################################
-
-## Define the host on which the mangos database resides (typically localhost)
-DB_HOST="localhost"
-
-## Define the port on which the mangos database is running (typically 3306)
-DB_PORT="3306"
-
-## Define the database in which you want to add clean WoTLK-DB
-DATABASE="wotlkmangos"
-
-## Define your username
-USERNAME="root"
-
-## Define your password (It is suggested to restrict read access to this file!)
-PASSWORD="mangos"
-
-## Define the path to your core's folder
-## Core updates located under sql/updates from this mangos-directory will be added automatically
-CORE_PATH="/sources"
-
-## Define your mysql programm if this differs
-MYSQL="mysql"
-
-## Define if you want to wait a bit before applying the full database
-FORCE_WAIT="NO"
-
-## Define if the 'dev' directory for processing development SQL files needs to be used
-## Set the variable to "YES" to use the dev directory
-DEV_UPDATES="NO"
-
-# Enjoy using the tool
-if [ ! -f $CONFIG_FILE ]
-then
-  create_config
-  display_help
-  exit 1
-fi
-
-. $CONFIG_FILE
 export MYSQL_PWD="$PASSWORD"
-MYSQL_COMMAND="$MYSQL -h$DB_HOST -P$DB_PORT -u$USERNAME $DATABASE"
+MYSQL_COMMAND="mysql -uroot -p --database=$DATABASE"
+MYSQL_COMMAND2="mysql  -uroot -p --database=$DATAREALM"
+MYSQL_COMMAND3="mysql  -uroot -p --database=$DATACHARAC"
 
 ## Print header
 echo
@@ -104,6 +54,63 @@ then
   done
   echo .
 fi
+
+## Create empty databases
+echo "> Create empty databases..."
+mysql -uroot -p < "${ADDITIONAL_PATH}create/db_create_mysql.sql"
+if [[ $? != 0 ]]
+then
+  echo "ERROR: cannot apply ${ADDITIONAL_PATH}create/db_create_mysql.sql"
+  exit 1
+fi
+echo "  Empty databases created!"
+echo
+echo
+
+## Initialize Mangos database
+echo ""
+$MYSQL_COMMAND < "${ADDITIONAL_PATH}base/mangos.sql"
+if [[ $? != 0 ]]
+then
+  echo "ERROR: cannot apply ${ADDITIONAL_PATH}base/mangos.sql"
+  exit 1
+fi
+echo "  Mangos database initialized!"
+echo
+echo
+
+## Initialize DBC data
+echo "Initialize DBC original_data..."
+for sql_file in $(ls ${ADDITIONAL_PATH}base/dbc/original_data/*.sql); do
+$MYSQL_COMMAND < $sql_file ; done
+echo "Initialize DBC cmangos_fixes..."
+for sql_file in $(ls ${ADDITIONAL_PATH}base/dbc/cmangos_fixes/*.sql); do
+$MYSQL_COMMAND < $sql_file ; done
+echo "done..."
+
+## Initialize characters database
+echo "Initialize characters database..."
+$MYSQL_COMMAND3 < "${ADDITIONAL_PATH}base/characters.sql"
+if [[ $? != 0 ]]
+then
+  echo "ERROR: cannot apply ${ADDITIONAL_PATH}base/characters.sql"
+  exit 1
+fi
+echo "  characters database initialized!"
+echo
+echo
+
+## Initialize realmd database
+echo "Initialize realmd database"
+$MYSQL_COMMAND2 < "${ADDITIONAL_PATH}base/realmd.sql"
+if [[ $? != 0 ]]
+then
+  echo "ERROR: cannot apply ${ADDITIONAL_PATH}base/realmd.sql"
+  exit 1
+fi
+echo "  Mangos database initialized!"
+echo
+echo
 
 ## Full Database
 echo "> Processing WoTLK database $DB_TITLE ..."
