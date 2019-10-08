@@ -11,6 +11,9 @@ RUN \
   git clone https://metagit.org/blizzlike/cmangos-wotlk-db-localized.git /database/localized --recursive -b master
   
 COPY --from=brouzuf/cmangostwobuild /mangos /mangos
+COPY --from=brouzuf/cmangostwobuild /database/create /database/create
+COPY --from=brouzuf/cmangostwobuild /database/base /database/base
+COPY --from=brouzuf/cmangostwobuild /database/tools /database/tools
 
 RUN \
   mkdir /etc/services.d/mangosd && \
